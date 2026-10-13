@@ -59,12 +59,12 @@ Las vistas usan fragmentos de URL; todas cargan el mismo `index.html`.
 
 | Ruta | Módulo | Función |
 |---|---|---|
-| `#inicio` | Mi establecimiento | Perfil, semáforo, puntos, pendientes y acceso al QR |
+| `#inicio` | Mi establecimiento | Perfil, semáforo, puntos, lista de chequeo de requisitos y acceso al QR |
 | `#documentos` | Expediente digital | Matriz de controles, filtros, referencias y verificaciones de prueba |
 | `#cedula` | Mi C.E.D.E. | Identificador, QR, impresión y enlace de consulta |
 | `#practicas` | Buenas prácticas | Registro de evidencias, vigencias y puntos |
 | `#alertas` | Alertas y vigencias | Seguimiento interno y actividad local |
-| `#horarios` | Horarios por municipio | Municipio, departamento, actividad, zona y fuentes normativas |
+| `#horarios` | Horarios por municipio | Municipio, departamento, actividad, zona, fuentes normativas, referencia y verificación del control |
 | `#biblioteca` | Biblioteca | Buscar, filtrar, abrir y descargar recursos |
 | `#entidades` | Entidades | Mapa de integraciones propuestas |
 | `#verificar` | Consulta IVC | Consulta del código ficticio `DEMO-0001` |
@@ -74,7 +74,7 @@ El formulario «Editar establecimiento», dentro de `#inicio`, registra nombre, 
 
 ## 5. Matriz del expediente
 
-El piloto desglosa los diez numerales del artículo 87 en doce controles, separando seguridad, sanidad y ambiente.
+El piloto desglosa los diez numerales del artículo 87 en doce controles, separando seguridad, sanidad y ambiente. A estos se suman ocho requisitos complementarios solicitados por Asobares, que no provienen del artículo 87.
 
 | ID en código | Control | Entidad o fuente prevista |
 |---|---|---|
@@ -91,7 +91,24 @@ El piloto desglosa los diez numerales del artículo 87 en doce controles, separa
 | `autor` | Derechos de autor y conexos | OSA y otros titulares o gestores según repertorio y legitimación |
 | `rnt` | Registro Nacional de Turismo | Sistema RNT / cámaras / MinCIT; según actividad y normas especiales |
 
-Los controles de alojamiento y equipos móviles se activan desde el perfil. El de derechos de autor se asume aplicable a todo establecimiento del perfil, porque la casilla de música causante de pago se retiró del formulario. La clasificación «no aplica» es preliminar, no una decisión jurídica automática. El perfil inicial tiene diez controles aplicables.
+### Requisitos complementarios
+
+Incorporados a solicitud de Asobares en octubre de 2026. **Su redacción, exigibilidad y responsable requieren validación jurídica**; el piloto los presenta como pendientes y aplicables a todo el perfil.
+
+| ID en código | Control | Entidad o fuente prevista |
+|---|---|---|
+| `rut` | Registro Único Tributario | DIAN |
+| `factura` | Facturación electrónica | DIAN |
+| `rit` | Registro de Información Tributaria | Secretaría de Hacienda distrital o municipal |
+| `retie` | Certificación RETIE / RETILAP | Profesional u organismo de inspección acreditado |
+| `dea` | Zona de cardioprotección (DEA) | Secretaría de Salud territorial |
+| `vertical` | Revisión de ascensores y puertas eléctricas | Organismo de inspección acreditado |
+| `precios` | Lista de precios visible al consumidor | Superintendencia de Industria y Comercio |
+| `poliza` | Póliza de responsabilidad civil y extracontractual | Aseguradora |
+
+Dos de ellos están pendientes de definición: `vertical` solo aplica si el establecimiento tiene ascensor o puertas eléctricas, y `poliza` es una recomendación gremial, no una obligación general. Hoy ambos cuentan como aplicables en el semáforo.
+
+Los controles de alojamiento y equipos móviles se activan desde el perfil. El de derechos de autor se asume aplicable a todo establecimiento del perfil, porque la casilla de música causante de pago se retiró del formulario. La clasificación «no aplica» es preliminar, no una decisión jurídica automática. El perfil inicial tiene dieciocho controles aplicables.
 
 ### Estados internos
 
@@ -111,7 +128,7 @@ Es un criterio operativo propuesto, no una clasificación sancionatoria legal.
 
 **Críticos:** uso del suelo, matrícula mercantil vigente, seguridad y sanidad. El código conserva una regla que activa rojo cuando la renovación mercantil figura como no registrada, pero la casilla que permitía declararlo se retiró del formulario y el piloto la da siempre por registrada. En producción debe distinguirse entre ausencia de dato y ausencia de renovación.
 
-Los «no aplica» se excluyen del denominador. Para el perfil inicial de diez controles, seis incumplimientos activan rojo por mayoría. Un incumplimiento crítico lo activa individualmente.
+Los «no aplica» se excluyen del denominador. Para el perfil inicial de dieciocho controles, diez incumplimientos activan rojo por mayoría. Un incumplimiento crítico lo activa individualmente.
 
 Los botones «Probar rojo», «Probar amarillo» y «Probar verde» reemplazan las verificaciones y referencias legales locales por un escenario demo. No deben existir en la operación institucional de producción.
 
@@ -120,6 +137,7 @@ Los botones «Probar rojo», «Probar amarillo» y «Probar verde» reemplazan l
 - La regla de **30 días** corresponde a la antigüedad propuesta para la evidencia mercantil dentro de C.E.D.E.; no se atribuye al artículo 87 como renovación mensual obligatoria.
 - Se muestra seguimiento desde el día 23; superar 30 días impide el verde.
 - La renovación anual de matrícula es un control distinto; el piloto la da por registrada y no la pregunta.
+- Cada referencia documental admite una **fecha de renovación o vencimiento** opcional. El control pasa a «Actualizar pronto» cuando faltan 30 días o menos y a «Actualizar evidencia» cuando la fecha ya pasó. «Alertas y vigencias» lista esas renovaciones ordenadas por urgencia.
 - Las preferencias de correo se guardan localmente; no se envía ningún mensaje.
 - No hay tareas programadas: el seguimiento se calcula al abrir o renderizar la aplicación.
 - La versión operativa deberá usar fechas confiables, zona horaria de Colombia y un proceso diario de notificación con registro de entrega.
