@@ -70,6 +70,8 @@ Las vistas usan fragmentos de URL; todas cargan el mismo `index.html`.
 | `#verificar` | Consulta IVC | Consulta del código ficticio `DEMO-0001` |
 | `#modelo` | Modelo del piloto | Alcance y arquitectura propuesta |
 
+El formulario «Editar establecimiento», dentro de `#inicio`, registra nombre, NIT, municipio, departamento (lista desplegable con los 32 departamentos y Bogotá D.C.), dirección, teléfono de contacto, correo de contacto y dos casillas de aplicabilidad: alojamiento y equipos terminales móviles. Los datos de contacto se guardan solo en el navegador y no se envían a ninguna parte. Cambiar el municipio o el departamento elimina la verificación previa del control de horarios.
+
 ## 5. Matriz del expediente
 
 El piloto desglosa los diez numerales del artículo 87 en doce controles, separando seguridad, sanidad y ambiente.
@@ -89,7 +91,7 @@ El piloto desglosa los diez numerales del artículo 87 en doce controles, separa
 | `autor` | Derechos de autor y conexos | OSA y otros titulares o gestores según repertorio y legitimación |
 | `rnt` | Registro Nacional de Turismo | Sistema RNT / cámaras / MinCIT; según actividad y normas especiales |
 
-Los controles de música causante de pago, alojamiento y equipos móviles se activan desde el perfil. La clasificación «no aplica» es preliminar, no una decisión jurídica automática. El perfil inicial tiene diez controles aplicables.
+Los controles de alojamiento y equipos móviles se activan desde el perfil. El de derechos de autor se asume aplicable a todo establecimiento del perfil, porque la casilla de música causante de pago se retiró del formulario. La clasificación «no aplica» es preliminar, no una decisión jurídica automática. El perfil inicial tiene diez controles aplicables.
 
 ### Estados internos
 
@@ -107,7 +109,7 @@ Es un criterio operativo propuesto, no una clasificación sancionatoria legal.
 | Amarillo | No se configura rojo, pero faltan verificaciones, existen pendientes o evidencia mercantil desactualizada |
 | Verde | Todos los controles aplicables tienen verificación positiva en la simulación y el certificado mercantil no supera 30 días |
 
-**Críticos:** uso del suelo, matrícula mercantil vigente, seguridad y sanidad. En el código, marcar la renovación mercantil como no registrada también activa rojo. Esta simplificación debe revisarse al desarrollar producción: ausencia de dato y ausencia de renovación no son lo mismo.
+**Críticos:** uso del suelo, matrícula mercantil vigente, seguridad y sanidad. El código conserva una regla que activa rojo cuando la renovación mercantil figura como no registrada, pero la casilla que permitía declararlo se retiró del formulario y el piloto la da siempre por registrada. En producción debe distinguirse entre ausencia de dato y ausencia de renovación.
 
 Los «no aplica» se excluyen del denominador. Para el perfil inicial de diez controles, seis incumplimientos activan rojo por mayoría. Un incumplimiento crítico lo activa individualmente.
 
@@ -117,7 +119,7 @@ Los botones «Probar rojo», «Probar amarillo» y «Probar verde» reemplazan l
 
 - La regla de **30 días** corresponde a la antigüedad propuesta para la evidencia mercantil dentro de C.E.D.E.; no se atribuye al artículo 87 como renovación mensual obligatoria.
 - Se muestra seguimiento desde el día 23; superar 30 días impide el verde.
-- La renovación anual de matrícula es un control distinto; el piloto utiliza una casilla declarativa.
+- La renovación anual de matrícula es un control distinto; el piloto la da por registrada y no la pregunta.
 - Las preferencias de correo se guardan localmente; no se envía ningún mensaje.
 - No hay tareas programadas: el seguimiento se calcula al abrir o renderizar la aplicación.
 - La versión operativa deberá usar fechas confiables, zona horaria de Colombia y un proceso diario de notificación con registro de entrega.
