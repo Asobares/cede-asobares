@@ -5,8 +5,9 @@ Documento de entrega funcional y técnica para Asobares y su webmaster.
 **Versión:** piloto demostrativo, corte de entrega 18 de septiembre de 2026.
 **Código de referencia:** 52312bcf22d854de7153cd0d0a79b695cc8925a3.
 **Promotor:** Asobares Colombia.
-**Dirección propuesta para una futura publicación:** `cede.asobares.org` (no configurada en esta entrega).
-**Piloto alojado:** https://cede-asobares-piloto.camilo-ospina.chatgpt.site
+**Publicado en:** https://cede.asobares.org (en línea desde el 21 de septiembre de 2026).
+**Repositorio y despliegue:** https://github.com/Asobares/cede-asobares, publicado automáticamente en Vercel.
+**Piloto original de la entrega:** https://cede-asobares-piloto.camilo-ospina.chatgpt.site
 
 ## 1. En qué consiste
 
@@ -30,7 +31,7 @@ Se entrega **todo el código del piloto actual**, escrito en HTML, CSS y JavaScr
 | Biblioteca | 26 recursos: 6 PDF locales, 19 documentos externos y 1 portal |
 | Horarios de Bogotá | Investigación incorporada, con fuentes y corte de revisión |
 | Otros municipios | Formulario y búsqueda externa; investigación pendiente |
-| QR | Imagen escaneable hacia la consulta del sitio original; un expediente demo |
+| QR | Imagen escaneable hacia la consulta de `cede.asobares.org`; un expediente demo |
 | Datos compartidos entre dispositivos | No implementados |
 | Usuarios, contraseñas y permisos por entidad | No implementados dentro de la aplicación |
 | Base de datos, servidor de negocio y API | No implementados |
@@ -39,7 +40,7 @@ Se entrega **todo el código del piloto actual**, escrito en HTML, CSS y JavaScr
 | Actualización automática de normas | No implementada |
 | Certificación o validación oficial | No implementada |
 
-La restricción de acceso del sitio original depende de su alojamiento. **El código exportado no contiene ese control de acceso.** Si el webmaster publica la carpeta en un servidor público, cualquier visitante podrá abrirla y utilizar sus controles de simulación. No deben introducirse expedientes reales en esta versión.
+La restricción de acceso del sitio original dependía de su alojamiento. **El código no contiene ningún control de acceso** y `cede.asobares.org` está publicado sin restricción: cualquier visitante puede abrirlo y utilizar sus controles de simulación. No deben introducirse expedientes reales en esta versión.
 
 ## 3. Usuarios previstos
 
@@ -246,29 +247,26 @@ location.reload();
 
 Esto elimina únicamente el expediente de prueba guardado para ese origen.
 
-## 13. Publicar en Asobares
+## 13. Publicación actual
 
-### Opción de subdominio
+El piloto está publicado en **https://cede.asobares.org**, con este montaje:
 
-1. El webmaster elige el alojamiento de la aplicación y crea su carpeta pública.
-2. Sube **el contenido de `web/`**, conservando nombres y subcarpetas.
-3. Configura `cede.asobares.org` con los valores DNS entregados por ese alojamiento. No hay un CNAME o IP universal en este paquete.
-4. Habilita HTTPS.
-5. Prueba las rutas, PDF, filtros y formularios con datos ficticios.
-6. Añade en `www.asobares.org` un enlace «Ventanilla Única C.E.D.E.».
-7. Mantiene visibles los avisos de demostración mientras no exista operación real.
+1. El código reside en el repositorio público `Asobares/cede-asobares`, rama `main`.
+2. El proyecto `cede-asobares` de Vercel está conectado a ese repositorio, con **Root Directory** `web` y sin comando de compilación. Cada cambio subido a `main` se publica automáticamente.
+3. En el DNS de `asobares.org`, gestionado en Hostinger, hay un registro `CNAME` para `cede` con el destino indicado por Vercel y un registro `TXT` `_vercel` de verificación. Existe otro `TXT` `_vercel` correspondiente a `biblioteca.asobares.org`, que debe conservarse.
+4. Vercel emite y renueva el certificado HTTPS.
 
-El paquete puede alojarse fuera de ChatGPT. No requiere una cuenta de ChatGPT para ejecutarse en otro servidor.
+Quedan pendientes dos tareas de publicación: añadir en `www.asobares.org` un enlace «Ventanilla Única C.E.D.E.» y mantener visibles los avisos de demostración mientras no exista operación real.
 
 ### Opción dentro de la web principal
 
 Se puede publicar bajo una carpeta como `/cede/` si el webmaster configura el servidor para servir estos archivos sin que el gestor de contenidos intercepte la ruta. Los recursos locales usan rutas relativas. No es un plugin WordPress y no debe pegarse `app.js` en el editor de una página.
 
-### QR y textos que deben ajustarse antes de migrar
+### QR y textos ajustados en la migración
 
-**El QR incluido apunta al sitio original**, a su vista `#verificar`. Cambiar el DNS o copiar archivos no cambia esa imagen. Regenerar `web/qr.svg` con la URL final del piloto en el nuevo dominio y probarlo desde un teléfono. La función de copiar enlace ya usa el origen y la ruta del navegador.
+`web/qr.svg` se regeneró para apuntar a `https://cede.asobares.org/#verificar`; el QR de la entrega original apuntaba al piloto alojado en `chatgpt.site`. El aviso de la cédula, que describía el sitio como de acceso privado, se corrigió para reflejar que es público. La función de copiar enlace ya usaba el origen y la ruta del navegador.
 
-La cédula contiene un aviso relativo al acceso privado del alojamiento original. Ajustarlo para reflejar el acceso del nuevo alojamiento, manteniendo explícito que el expediente es ficticio. En producción, reemplazar el identificador único `DEMO-0001` y el QR fijo por un identificador opaco y una consulta en servidor para cada sede.
+En producción, reemplazar el identificador único `DEMO-0001` y el QR fijo por un identificador opaco y una consulta en servidor para cada sede.
 
 ## 14. Desarrollo necesario para operar con datos reales
 
