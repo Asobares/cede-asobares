@@ -28,7 +28,7 @@ Se entrega **todo el código del piloto actual**, escrito en HTML, CSS y JavaScr
 | Registro de referencias y fechas documentales | Implementado; no carga archivos de empresarios |
 | Semáforo y escenarios de prueba | Implementados; verificaciones simuladas |
 | Puntos por buenas prácticas | Implementados con referencias, vigencia y validación simulada |
-| Biblioteca | 26 recursos: 6 PDF locales, 19 documentos externos y 1 portal |
+| Biblioteca | 11 recursos: 6 PDF locales, 4 protocolos IVC enlazados y 1 portal |
 | Horarios de Bogotá | Investigación incorporada, con fuentes y corte de revisión |
 | Otros municipios | Formulario y búsqueda externa; investigación pendiente |
 | QR | Imagen escaneable hacia la consulta de `cede.asobares.org`; un expediente demo |
@@ -59,9 +59,9 @@ Las vistas usan fragmentos de URL; todas cargan el mismo `index.html`.
 
 | Ruta | Módulo | Función |
 |---|---|---|
-| `#inicio` | Mi establecimiento | Perfil, semáforo, puntos, lista de chequeo de requisitos y acceso al QR |
+| `#inicio` | Mi establecimiento | Empresa y sus establecimientos, perfil, semáforo, puntos, lista de chequeo y acceso al QR |
 | `#documentos` | Expediente digital | Matriz de controles, filtros, referencias y verificaciones de prueba |
-| `#cedula` | Mi C.E.D.E. | Identificador, QR, impresión y enlace de consulta |
+| `#cedula` | Mi C.E.D.E. | Identificador, QR, descarga en PNG, impresión a PDF y enlace de consulta |
 | `#practicas` | Buenas prácticas | Registro de evidencias, vigencias y puntos |
 | `#alertas` | Alertas y vigencias | Seguimiento interno y actividad local |
 | `#horarios` | Horarios por municipio | Municipio, departamento, actividad, zona, fuentes normativas, referencia y verificación del control |
@@ -74,14 +74,13 @@ El formulario «Editar establecimiento», dentro de `#inicio`, registra nombre, 
 
 ## 5. Matriz del expediente
 
-El piloto desglosa los diez numerales del artículo 87 en doce controles, separando seguridad, sanidad y ambiente. A estos se suman ocho requisitos complementarios solicitados por Asobares, que no provienen del artículo 87.
+El piloto desglosa los numerales del artículo 87 en once controles, separando seguridad, sanidad y ambiente. El control de comercialización de equipos móviles se retiró en octubre de 2026 por no aplicar al gremio. A estos se suman ocho requisitos complementarios solicitados por Asobares, que no provienen del artículo 87.
 
 | ID en código | Control | Entidad o fuente prevista |
 |---|---|---|
 | `suelo` | Uso del suelo y destinación | Planeación municipal o distrital |
 | `mercantil` | Matrícula y certificado | Cámara de Comercio de la jurisdicción / RUES |
 | `apertura` | Comunicación de apertura | Policía Nacional |
-| `moviles` | Comercialización de equipos móviles | MinTIC o delegado; condicionado a actividad |
 | `ruido` | Intensidad auditiva | Autoridad competente; verificación técnica cuando corresponda |
 | `horarios` | Horario de operación | Alcaldía y autoridades territoriales competentes |
 | `seguridad` | Condiciones de seguridad | Autoridades locales según competencia |
@@ -108,7 +107,7 @@ Incorporados a solicitud de Asobares en octubre de 2026. **Su redacción, exigib
 
 Dos de ellos están pendientes de definición: `vertical` solo aplica si el establecimiento tiene ascensor o puertas eléctricas, y `poliza` es una recomendación gremial, no una obligación general. Hoy ambos cuentan como aplicables en el semáforo.
 
-Los controles de alojamiento y equipos móviles se activan desde el perfil. El de derechos de autor se asume aplicable a todo establecimiento del perfil, porque la casilla de música causante de pago se retiró del formulario. La clasificación «no aplica» es preliminar, no una decisión jurídica automática. El perfil inicial tiene dieciocho controles aplicables.
+El control de alojamiento se activa desde el perfil. El de derechos de autor se asume aplicable a todo establecimiento del perfil, porque la casilla de música causante de pago se retiró del formulario. La clasificación «no aplica» es preliminar, no una decisión jurídica automática. El perfil inicial tiene dieciocho controles aplicables.
 
 ### Estados internos
 
@@ -204,7 +203,7 @@ Incluye seis PDF dentro del paquete:
 
 También enlaza cuatro protocolos: IVC sanitaria, IVC derechos de autor, IVC ambiental y visitas DIAN. Hay quince políticas y formatos adicionales y un acceso al portal de formación de Asobares.
 
-Los 19 documentos externos **no están descargados en este ZIP**: se conservan sus enlaces originales y permisos. La fecha de publicación de la guía no garantiza la actualización de todas las normas citadas. Los PDF de los artículos son reproducciones para consulta, no copias certificadas.
+Los cuatro protocolos IVC **no están descargados en este paquete**: se conservan sus enlaces originales y permisos. En octubre de 2026, a solicitud de Asobares, se retiraron del catálogo las quince políticas y formatos laborales, y los protocolos recibieron títulos orientados a la pregunta que resuelven. La fecha de publicación de la guía no garantiza la actualización de todas las normas citadas. Los PDF de los artículos son reproducciones para consulta, no copias certificadas.
 
 Consultar `CATALOGO_BIBLIOTECA.md`, incluido en el ZIP, para el inventario completo y sus fuentes. La entrega no otorga una licencia abierta sobre documentos de terceros ni cambia sus permisos.
 
@@ -228,7 +227,17 @@ No hay `package.json`, instalación npm, base de datos ni paso de compilación. 
 
 ### Persistencia
 
-Se utiliza `localStorage`, clave `cede-pilot-v1`. El objeto `state` contiene perfil, referencias, verificaciones, eventos, preferencias, buenas prácticas y datos de horarios. Es un único expediente local, no una colección multiempresa.
+Se utiliza `localStorage`, clave `cede-pilot-v1`, con esta forma:
+
+```
+{ company:{nit, razon}, sites:{ <id>:{ name, code, city, department, address, ciiu, docs, checks, practices, events, ... } }, order:[ids], current:<id> }
+```
+
+Una empresa, identificada por su NIT y su razón social, agrupa varios establecimientos. Cada uno conserva su propio expediente, su código C.E.D.E. (`DEMO-0001`, `DEMO-0002`…), sus buenas prácticas y su bitácora. `state` apunta al establecimiento activo. Los expedientes guardados con el formato plano anterior se migran al abrir la aplicación.
+
+Los PDF que el usuario adjunta se guardan aparte, en **IndexedDB**, base `cede-files`, con claves `doc:<control>` y `practica:<práctica>`. Siguen siendo locales de ese navegador: no se envían a ningún servidor, no se sincronizan y se pierden si se borran los datos del sitio. El límite por archivo es de 10 MB y solo se admite PDF.
+
+Es una colección local de un solo usuario, no un sistema multiempresa: no hay cuentas, permisos ni separación entre empresas distintas.
 
 El contenido es modificable por quien controla el navegador. No es una bitácora confiable ni un mecanismo de autenticación. No se sincroniza, respalda o migra automáticamente. Cambiar de dominio genera un almacenamiento independiente.
 
