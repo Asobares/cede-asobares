@@ -140,7 +140,7 @@ Los botones «Probar rojo», «Probar amarillo» y «Probar verde» reemplazan l
 | Alianza de aprovechamiento de residuos | 5 |
 | **Total** | **100** |
 
-Cada práctica exige una referencia, fecha de evidencia y fecha de revisión. La revisión no puede superar doce meses desde la evidencia; debe utilizarse un plazo menor si el soporte vence antes. Solo suma una práctica vigente con validación simulada positiva. Una evidencia pendiente o vencida aporta cero puntos.
+La validación simulada se activa con el botón «Validar» de la propia tarjeta o con «Simular validación» dentro de su ficha. Cada práctica exige una referencia, fecha de evidencia y fecha de revisión. La revisión no puede superar doce meses desde la evidencia; debe utilizarse un plazo menor si el soporte vence antes. Solo suma una práctica vigente con validación simulada positiva. Una evidencia pendiente o vencida aporta cero puntos.
 
 El código impide repetir exactamente una referencia entre prácticas, sin distinguir mayúsculas. Esto no detecta por sí solo documentos duplicados con otro nombre; producción necesita identificadores y huellas de archivo.
 
