@@ -66,7 +66,7 @@ Las vistas usan fragmentos de URL; todas cargan el mismo `index.html`.
 | `#alertas` | Alertas y vigencias | Seguimiento interno y actividad local |
 | `#horarios` | Horarios por municipio | Municipio, departamento, actividad, zona, fuentes normativas, referencia y verificación del control |
 | `#biblioteca` | Biblioteca | Buscar, filtrar, abrir y descargar recursos |
-| `#entidades` | Entidades | Mapa de integraciones propuestas |
+| `#entidades` | Entidades | Mapa de integraciones propuestas, enlaces al trámite en línea y contacto por WhatsApp |
 | `#verificar` | Consulta IVC | Consulta del código ficticio `DEMO-0001` |
 | `#modelo` | Modelo del piloto | Alcance y arquitectura propuesta |
 
@@ -182,6 +182,12 @@ La investigación incorporada para Bogotá tiene corte **18/09/2026** y remite a
 Para otras ciudades, la interfaz registra el municipio y abre una búsqueda externa en dominios gubernamentales. No investiga, extrae ni valida automáticamente resultados. Cambiar municipio, actividad o zona desde este formulario borra la referencia y verificación previas del control de horarios.
 
 Para producción: usar códigos municipales, catálogo de normas versionado, delimitación geográfica de zonas, vigencia temporal y revisión jurídica. Incorporar tanto actos generales como restricciones excepcionales. La detección actual de Bogotá por texto es una simplificación que debe reemplazarse.
+
+### Entidades y canal de acompañamiento
+
+Cada tarjeta de `#entidades` enlaza el trámite en línea de la entidad cuando existe y ofrece un botón de WhatsApp al **+57 321 230 4589**, con un mensaje que nombra el requisito. El número está escrito en `app.js`, en la constante `WHATSAPP`.
+
+Los enlaces se verificaron el 13 de octubre de 2026. Varios corresponden a autoridades territoriales y apuntan a Bogotá; en otros municipios cambia la entidad competente. Las curadurías urbanas no tienen portal único, así que esa tarjeta ofrece solo el canal de WhatsApp.
 
 ## 10. Biblioteca
 
